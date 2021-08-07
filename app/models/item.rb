@@ -1,5 +1,5 @@
 class Item < ApplicationRecord
-  enum enable: { enable: 0, disable: 1 }
+  enum status: { enabled: 0, disabled: 1 }
 
   belongs_to :merchant
   has_many :invoice_items
@@ -9,8 +9,8 @@ class Item < ApplicationRecord
   validates :description, presence: true
   validates :unit_price, presence: true, numericality: { only_integer: true }
 
-  def enable_opposite
-    enable == 'enable' ? 'disable' : 'enable'
+  def status_opposite
+    status == 'enabled' ? 'disabled' : 'enabled'
   end
 
   def self.items_ready_to_ship_by_ordered_date(merchant_id = nil)
@@ -37,11 +37,11 @@ class Item < ApplicationRecord
   end
 
   def self.enabled_items
-    where(enable: 0)
+    where(status: 0)
   end
 
   def self.disabled_items
-    where(enable: 1)
+    where(status: 1)
   end
 
 end

@@ -18,7 +18,7 @@ RSpec.describe 'The Merchant Item New page' do
     expect(page).to have_field(:unit_price)
   end
 
-  it "can create a new Merchant Item with a default status of 'disable'" do
+  it "can create a new Merchant Item with a default status of 'disabled'" do
     fill_in(:name, with: 'Goober')
     fill_in(:description, with: 'USB thumb drive thingy')
     fill_in(:unit_price, with: 20_000)
@@ -30,7 +30,7 @@ RSpec.describe 'The Merchant Item New page' do
     expect(Item.last.name).to eq('Goober')
     expect(Item.last.description).to eq('USB thumb drive thingy')
     expect(Item.last.unit_price).to eq(20_000)
-    expect(Item.last.enable).to eq('disable')
+    expect(Item.last.status).to eq('disabled')
   end
 
   it 'displays an alert when empty fields are submitted' do

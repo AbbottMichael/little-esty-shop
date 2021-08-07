@@ -80,28 +80,28 @@ RSpec.describe 'Merchants Item Index Page' do
 
     it "displays a button to disable or enable each item" do
       within "#merchant_item-#{@item1.id}" do
-        expect(@item1.enable).to eq('enable')
+        expect(@item1.status).to eq('enabled')
         expect(page).to have_button('Disable Item')
       end
       within "#merchant_item-#{@item2.id}" do
-        expect(@item1.enable).to eq('enable')
+        expect(@item1.status).to eq('enabled')
         expect(page).to have_button('Disable Item')
       end
       within "#merchant_item-#{@item4.id}" do
-        expect(@item1.enable).to eq('enable')
+        expect(@item1.status).to eq('enabled')
         expect(page).to have_button('Disable Item')
       end
     end
 
     it "clicking enable/disable button redirects back to the index page and the updated status is displayed" do
       within "#merchant_item-#{@item1.id}" do
-        expect(@item1.enable).to eq('enable')
+        expect(@item1.status).to eq('enabled')
 
         click_button('Disable Item')
         @item1.reload
 
         expect(page).to have_current_path(merchant_items_path(@merchant1.id))
-        expect(@item1.enable).to eq('disable')
+        expect(@item1.status).to eq('disabled')
       end
     end
   end
@@ -189,9 +189,9 @@ RSpec.describe 'Merchants Item Index Page' do
     it 'displays all of the enabled items' do
       merchant1 = Merchant.create!(name: 'Tom Holland')
       item1 = Item.create!(name: 'spider suit', description: 'saves lives', unit_price: 10_000, merchant_id: merchant1.id)
-      item2 = Item.create!(name: 'web shooter', description: 'shoots webs', unit_price: 5000, merchant_id: merchant1.id, enable: 'disable')
+      item2 = Item.create!(name: 'web shooter', description: 'shoots webs', unit_price: 5000, merchant_id: merchant1.id, status: 'disabled')
       item3 = Item.create!(name: 'asdf', description: '3', unit_price: 7500, merchant_id: merchant1.id)
-      item4 = Item.create!(name: 'ghjk', description: '4', unit_price: 8500, merchant_id: merchant1.id, enable: 'disable')
+      item4 = Item.create!(name: 'ghjk', description: '4', unit_price: 8500, merchant_id: merchant1.id, status: 'disabled')
       item5 = Item.create!(name: 'qwer', description: '5', unit_price: 9764, merchant_id: merchant1.id)
 
       visit merchant_items_path(merchant1.id)
@@ -208,9 +208,9 @@ RSpec.describe 'Merchants Item Index Page' do
     it 'displays all of the disabled items' do
       merchant1 = Merchant.create!(name: 'Tom Holland')
       item1 = Item.create!(name: 'spider suit', description: 'saves lives', unit_price: 10_000, merchant_id: merchant1.id)
-      item2 = Item.create!(name: 'web shooter', description: 'shoots webs', unit_price: 5000, merchant_id: merchant1.id, enable: 'disable')
+      item2 = Item.create!(name: 'web shooter', description: 'shoots webs', unit_price: 5000, merchant_id: merchant1.id, status: 'disabled')
       item3 = Item.create!(name: 'asdf', description: '3', unit_price: 7500, merchant_id: merchant1.id)
-      item4 = Item.create!(name: 'ghjk', description: '4', unit_price: 8500, merchant_id: merchant1.id, enable: 'disable')
+      item4 = Item.create!(name: 'ghjk', description: '4', unit_price: 8500, merchant_id: merchant1.id, status: 'disabled')
       item5 = Item.create!(name: 'qwer', description: '5', unit_price: 9764, merchant_id: merchant1.id)
 
       visit merchant_items_path(merchant1.id)
