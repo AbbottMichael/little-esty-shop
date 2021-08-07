@@ -15,12 +15,12 @@ RSpec.describe Item do
 
   describe 'instance methods' do
     describe '#enable_opposite' do
-      it "returns the opposite of the item's enable/disable status; " do
+      it "returns the opposite of the item's enabled/disabled status" do
         @merchant1 = Merchant.create!(name: 'Tom Holland')
         @item1 = Item.create!(name: 'spider suit', description: 'saves lives', unit_price: '10000', merchant_id: @merchant1.id)
 
-        expect(@item1.enable).to eq('enable')
-        expect(@item1.enable_opposite).to eq('disable')
+        expect(@item1.status).to eq('enabled')
+        expect(@item1.status_opposite).to eq('disabled')
       end
     end
 
@@ -111,7 +111,7 @@ RSpec.describe Item do
 
     describe '::enabled_items' do
       it "selects all merchant's items with enabled status" do
-        @item_4 = Item.create!(name: 'Hammer', description: 'pound stuff', unit_price: 10_000, merchant_id: @merchant_1.id, enable: 'disable')
+        @item_4 = Item.create!(name: 'Hammer', description: 'pound stuff', unit_price: 10_000, merchant_id: @merchant_1.id, status: 'disabled')
 
         expect(@merchant_1.items.enabled_items).to eq([@item_1, @item_2, @item_3])
       end
@@ -119,7 +119,7 @@ RSpec.describe Item do
 
     describe '::disabled_items' do
       it "selects all merchant's items with enabled status" do
-        @item_4 = Item.create!(name: 'Hammer', description: 'pound stuff', unit_price: 10_000, merchant_id: @merchant_1.id, enable: 'disable')
+        @item_4 = Item.create!(name: 'Hammer', description: 'pound stuff', unit_price: 10_000, merchant_id: @merchant_1.id, status: 'disabled')
 
         expect(@merchant_1.items.disabled_items).to eq([@item_4])
       end
