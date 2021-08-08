@@ -1,0 +1,11 @@
+<div align="center">
+<h2>Bulk Discount Details</h2>
+<br>
+
+  <div class="card navbar-custom"  style="width: 18rem;">
+    <div class="card-body">
+      <h5 class="card-title">Bulk Discount ID #<%=@discount.id%></h5>
+      <h6 class="card-subtitle mb-2 text-muted">Percentage Discount: <%= number_to_percentage((@discount.percentage * 100), precision: 0) %></h6>
+      <h6 class="card-subtitle mb-2 text-muted">Quantity Threshold: <%= @discount.threshold %></h6>
+    </div>
+  </div>
