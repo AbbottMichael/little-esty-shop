@@ -31,6 +31,12 @@ RSpec.describe 'Merchants Dashboard Page' do
     expect(current_path).to eq("/merchants/#{@merchant.id}/invoices")
   end
 
+  it "can take user to the merchant's bulk discount's index page" do
+    click_link 'All Bulk Discounts'
+
+    expect(current_path).to eq(merchant_bulk_discounts_path(@merchant.id))
+  end
+
   # As a merchant,
     # When I visit my merchant dashboard
     # Then I see the names of the top 5 customers
