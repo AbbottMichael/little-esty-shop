@@ -19,6 +19,11 @@ class Merchant::BulkDiscountsController < ApplicationController
     redirect_to merchant_bulk_discount_path(discount.merchant_id, discount.id), notice: "Discount successfully updated."
   end
 
+  def destroy
+    BulkDiscount.destroy(params[:id])
+    redirect_to merchant_bulk_discounts_path(params[:merchant_id], params[:id]), notice: "Discount successfully deleted."
+  end
+
   private
 
   def discount_model_params
