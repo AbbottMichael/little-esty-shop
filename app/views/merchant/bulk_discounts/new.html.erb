@@ -1,0 +1,20 @@
+<h2>Create a new bulk discount</h2>
+<br>
+
+<div style="background:rgba(250,250,250, 0.3); padding:40px; border:1px solid white; width:60%; align-text:centered; margin: 0 auto;">
+  <p class="alert alert-secondary"> Percentage discount NOTE: 0.05 = 5%; 0.1 = 10% etc. The min value is 0.01; max is 0.99 </p>
+  <br>
+
+  <%= form_with model: [ :merchant, @discount ], local: true do |f| %>
+
+    <%= f.label :percentage, 'Percentage discount: ' %>
+    <%= f.number_field :percentage, step: 0.05, min: 0, max: 0.99, placeholder: '0.01' %><br>
+    <br>
+    <%= f.label :threshold, 'Quantity threshold: ' %>
+    <%= f.number_field :threshold, step: 1, min: 1, placeholder: '1 or more' %><br>
+    <br>
+    <%= f.hidden_field :merchant_id, value: params[:merchant_id]  %>
+    <%= f.submit 'Create' %>
+  <% end %>
+
+</div>
