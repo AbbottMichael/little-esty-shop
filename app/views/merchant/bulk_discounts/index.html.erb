@@ -11,13 +11,14 @@
     <tbody id="all-discounts">
       <tr id="discount-table-headers">
         <th>Discount ID</th>
+        <th>Delete Discount</th>
         <th>Percentage Discount</th>
         <th>Quantity Threshold</th>
       </tr>
       <% @discounts.each do |discount| %>
         <tr id="discount-<%= discount.id %>">
           <td><%= link_to discount.id, merchant_bulk_discount_path(@merchant.id, discount.id), class: "btn btn-secondary btn-sm" %></td>
-          <!-- <td><%= discount.id %></td> -->
+          <td><%= link_to 'Delete', merchant_bulk_discount_path(@merchant.id, discount.id), method: :delete, class: "btn btn-secondary btn-sm" %></td>
           <td><%= number_to_percentage((discount.percentage * 100), precision: 0) %></td>
           <td><%= discount.threshold %></td>
         </tr>

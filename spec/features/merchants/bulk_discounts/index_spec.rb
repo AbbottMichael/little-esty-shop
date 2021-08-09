@@ -38,4 +38,22 @@ RSpec.describe "The Merchant BulkDiscount index page" do
       end
     end
   end
+
+  it "displays a link to delete the discount next to each bulk discount listed; the record is deleted after clicking" do
+    within "#all-discounts" do
+      within "#discount-#{@discount1.id}" do
+        expect(page).to have_link("Delete")
+        click_on "Delete"
+      end
+
+      expect(page).to_not have_content(@discount1.id)
+
+      within "#discount-#{@discount2.id}" do
+        expect(page).to have_link("Delete")
+        click_on "Delete"
+      end
+
+      expect(page).to_not have_content(@discount2.id)
+    end
+  end
 end
