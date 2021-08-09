@@ -24,9 +24,22 @@ class Merchant::BulkDiscountsController < ApplicationController
     redirect_to merchant_bulk_discounts_path(params[:merchant_id], params[:id]), notice: "Discount successfully deleted."
   end
 
+  def new
+    @discount = BulkDiscount.new
+  end
+
+  def create
+    discount = BulkDiscount.new(discount_model_params)
+    if discount.save
+      redirect_to merchant_bulk_discounts_path(params[:merchant_id]), notice: "Discount successfully created."
+    else
+      redirect_to new_merchant_bulk_discount_path(params[:merchant_id]), alert: "Discount not created."
+    end
+  end
+
   private
 
   def discount_model_params
-    params.require(:bulk_discount).permit(:percentage, :threshold)
+    params.require(:bulk_discount).permit(:percentage, :threshold, :merchant_id)
   end
 end
