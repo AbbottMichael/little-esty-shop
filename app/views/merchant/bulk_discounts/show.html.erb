@@ -7,5 +7,6 @@
       <h5 class="card-title">Bulk Discount ID #<%=@discount.id%></h5>
       <h6 class="card-subtitle mb-2 text-muted">Percentage Discount: <%= number_to_percentage((@discount.percentage * 100), precision: 0) %></h6>
       <h6 class="card-subtitle mb-2 text-muted">Quantity Threshold: <%= @discount.threshold %></h6>
+      <%= link_to 'Update Discount', edit_merchant_bulk_discount_path(@merchant.id, @discount.id), class:"btn btn-outline-dark navbar-custom" %>
     </div>
   </div>
