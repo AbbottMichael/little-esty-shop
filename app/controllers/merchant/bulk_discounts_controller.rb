@@ -2,6 +2,7 @@ class Merchant::BulkDiscountsController < ApplicationController
   def index
     @merchant = Merchant.find(params[:merchant_id])
     @discounts = @merchant.bulk_discounts
+    @holidays = holiday_api
   end
 
   def show
@@ -41,5 +42,11 @@ class Merchant::BulkDiscountsController < ApplicationController
 
   def discount_model_params
     params.require(:bulk_discount).permit(:percentage, :threshold, :merchant_id)
+  end
+
+  def holiday_api
+    response = Faraday.get 'https://date.nager.at/api/v2/NextPublicHolidays/us'
+    json = JSON.parse(response.body, symbolize_names: true)
+    json[0..2]
   end
 end

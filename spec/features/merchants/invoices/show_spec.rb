@@ -110,7 +110,6 @@ RSpec.describe "The Merchant Invoice show page" do
 
   it 'displays the total revenue generated from all the items on this invoice' do
     expect(page).to have_content("Total Invoice Revenue Potential: $1,015.00")
-    save_and_open_page
   end
 
   it 'displays a link to the show page for the applied bulk discount, next to each invoice item' do
