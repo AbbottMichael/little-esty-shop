@@ -15,7 +15,7 @@ RSpec.describe 'Github API Statistics' do
     # This number is updated as each member of the team contributes more commits
     # I see the number of merged PRs across all team members
     # This number is updated as each member of the team merges more PRs
-  it 'displays the navbar dropdown for API statistics' do
+  xit 'displays the navbar dropdown for API statistics' do
     expect(current_path).to eq('/')
     expect(page).to have_content('Github Stats')
 
@@ -33,7 +33,7 @@ RSpec.describe 'Github API Statistics' do
 
   end
 
-  it 'can refresh API statistics with a redirect back to the current page' do
+  xit 'can refresh API statistics with a redirect back to the current page' do
     mock_response = [
       {"state" => "closed", "title" => "PR #1",
         "user" => {"login" => "tvaroglu"}
