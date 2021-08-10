@@ -28,3 +28,23 @@
     </tbody>
   </table>
 <br>
+
+<table class="table table-striped navbar-custom">
+  <thead class="custom" text-align="center" align="center">
+    <tr>
+      <th colspan="4" style="font-family: Quicksand;"><h4>Upcoming Holidays</h4></th>
+    </tr>
+  </thead >
+  <tbody id="holidays_next_3">
+    <tr id="discount-table-headers">
+      <th>Holiday Name</th>
+      <th>Holiday Date</th>
+    </tr>
+    <% @holidays.each do |holiday| %>
+      <tr id="<%= holiday[:localName] %>">
+        <td><%= holiday[:localName] %></td>
+        <td><%= holiday[:date] %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
