@@ -5,6 +5,8 @@ RSpec.describe "The Merchant Invoice show page" do
     @merchant1 = Merchant.create!(name: 'Korbanth')
     @merchant2 = Merchant.create!(name: 'asdf')
 
+    @discount1 = @merchant1.bulk_discounts.create!(percentage: 0.10, threshold: 4)
+
     @item1 = @merchant1.items.create!(
       name: 'SK2',
       description: "Starkiller's lightsaber from TFU2 promo trailer",
@@ -38,13 +40,13 @@ RSpec.describe "The Merchant Invoice show page" do
     @invoice_item2 = InvoiceItem.create!(
       item: @item2,
       invoice: @invoice1,
-      quantity: 1,
+      quantity: 4,
       unit_price: 25_000,
       status: 1)
     @invoice_item3 = InvoiceItem.create!(
       item: @item3,
       invoice: @invoice2,
-      quantity: 1,
+      quantity: 10,
       unit_price: 60_000,
       status: 1)
     @invoice_item4 = InvoiceItem.create!(
@@ -107,6 +109,15 @@ RSpec.describe "The Merchant Invoice show page" do
   end
 
   it 'displays the total revenue generated from all the items on this invoice' do
-    expect(page).to have_content("Total Invoice Revenue Potential: $265.00")
+    expect(page).to have_content("Total Invoice Revenue Potential: $1,015.00")
+  end
+
+  it 'displays a link to the show page for the applied bulk discount, next to each invoice item' do
+    within("div#id-#{@invoice_item1.id}") do
+      expect(page).to_not have_link("Discount Applied")
+    end
+    within("div#id-#{@invoice_item2.id}") do
+      expect(page).to have_link("Discount Applied")
+    end
   end
 end
