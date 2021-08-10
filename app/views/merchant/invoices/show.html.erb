@@ -29,6 +29,7 @@
       <h5 class="card-title"><p>Item: <%= ii.item.name %></p></h5>
       <h6 class="card-subtitle mb-2 text-muted">Quantity: <%= ii.quantity %></h6>
       <h6 class="card-subtitle mb-2 text-muted">Unit Price: <%= number_to_currency(ii.unit_price/100.00, precision: 2) %></h6>
+      <h6 class="card-subtitle mb-2 text-muted"> <%= link_to 'Discount details', merchant_bulk_discount_path(@merchant.id, ii.applied_discount(@merchant.id).id), class: "btn btn-secondary btn-sm" if ii.applied_discount(@merchant.id) != nil  %></h6>
       <%= form_with url: merchant_invoice_path(@merchant, @invoice), method: :patch, local: true do |form| %>
         <%= form.hidden_field :ii_id, value: ii.id %>
         <%= form.select :status, options_for_select([:pending, :packaged, :shipped], ii.status) %>

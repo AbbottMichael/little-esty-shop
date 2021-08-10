@@ -58,7 +58,6 @@ BulkDiscount.create(percentage: 0.1, threshold: 4, merchant_id: 57)
 BulkDiscount.create(percentage: 0.1, threshold: 4, merchant_id: 58)
 BulkDiscount.create(percentage: 0.1, threshold: 4, merchant_id: 59)
 BulkDiscount.create(percentage: 0.1, threshold: 4, merchant_id: 60)
-
 BulkDiscount.create(percentage: 0.3, threshold: 10, merchant_id: 1)
 BulkDiscount.create(percentage: 0.3, threshold: 10, merchant_id: 2)
 BulkDiscount.create(percentage: 0.3, threshold: 10, merchant_id: 3)
@@ -109,3 +108,10 @@ BulkDiscount.create(percentage: 0.3, threshold: 10, merchant_id: 57)
 BulkDiscount.create(percentage: 0.3, threshold: 10, merchant_id: 58)
 BulkDiscount.create(percentage: 0.3, threshold: 10, merchant_id: 59)
 BulkDiscount.create(percentage: 0.3, threshold: 10, merchant_id: 60)
+
+
+x = BulkDiscount.joins(merchant: [{ items: [{invoices: :invoice_items}]}]).where(merchants: {id: 1}, invoice_items: {invoice_id:882}).where('invoice_items.quantity >= bulk_discounts.threshold').select('invoice_items.id AS invoice_item_id', 'invoice_items.quantity', 'bulk_discounts.id AS discount_id', 'items.id AS item_id').distinct
+
+x = BulkDiscount.joins(merchant: [{ items: [{invoices: :invoice_items}]}]).where(merchants: {id: 1}, invoice_items: {invoice_id: 882, id: 3928}).where('invoice_items.quantity >= bulk_discounts.threshold').select('invoice_items.id AS invoice_item_id', 'invoice_items.quantity', 'bulk_discounts.threshold', 'bulk_discounts.id AS discount_id', 'items.id AS item_id').order('bulk_discounts.threshold DESC').take
+
+link_to_if(ii.applied_discount(@merchant.id) != nil, 'Discount', { controller: "merchant/bulk_discounts", action: "show" })
