@@ -13,7 +13,7 @@ class InvoiceItem < ApplicationRecord
                 .where(merchants: {id: merchant_id}, invoice_items: {invoice_id: self.invoice_id, id: self.id})
                 .where('invoice_items.quantity >= bulk_discounts.threshold')
                 .select('bulk_discounts.id', 'invoice_items.id AS invoice_item_id', 'invoice_items.quantity', 'bulk_discounts.threshold', 'items.id AS item_id')
-                .order(threshold: :desc)
+                .order(percentage: :desc)
                 .take
   end
 end
