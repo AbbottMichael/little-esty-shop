@@ -14,10 +14,6 @@ RSpec.describe "The Merchant Bulk Discount edit page" do
     expect(page).to have_field("bulk_discount_threshold", with: @discount1.threshold)
   end
 
-  it "only accepts valid input data"
-
-  it "displays an alert message when invalid data is entered"
-
   it "modifies the bulk discount record and redirects to it's show page" do
     expect(@discount1.percentage).to eq(0.1)
     expect(@discount1.threshold).to eq(3)
@@ -27,6 +23,7 @@ RSpec.describe "The Merchant Bulk Discount edit page" do
     click_button 'Update'
 
     expect(current_path).to eq(merchant_bulk_discount_path(@merchant1.id, @discount1.id))
+    expect(page).to have_content("Discount successfully updated.")
     @discount1.reload
 
     expect(@discount1.percentage).to eq(0.2)
