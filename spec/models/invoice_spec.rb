@@ -51,7 +51,7 @@ RSpec.describe Invoice do
       @invoice_item2 = InvoiceItem.create!(
         item: @item2,
         invoice: @invoice1,
-        quantity: 1,
+        quantity: 4,
         unit_price: 25_000,
         status: 1)
       @invoice_item3 = InvoiceItem.create!(
@@ -70,7 +70,27 @@ RSpec.describe Invoice do
 
     describe '#invoice_revenue' do
       it 'calculates the total revenue potential of the invoice' do
-        expect(@invoice1.invoice_revenue).to eq(26_500)
+        expect(@invoice1.invoice_revenue).to eq(101_500)
+      end
+    end
+
+    describe '#invoice_revenue_discounted' do
+      before :each do
+        @discount1 = @merchant1.bulk_discounts.create!(percentage: 0.10, threshold: 3)
+      end
+
+      it 'calculates the total revenue of the invoice including discounts' do
+        expect(@invoice1.invoice_revenue_discounted(@merchant1)).to eq(91_500)
+      end
+    end
+
+    describe '#admin_invoice_revenue_discounted' do
+      before :each do
+        @discount1 = @merchant1.bulk_discounts.create!(percentage: 0.10, threshold: 3)
+      end
+
+      it 'calculates the total revenue of the invoice including discounts' do
+        expect(@invoice1.admin_invoice_revenue_discounted).to eq(91_500)
       end
     end
   end
