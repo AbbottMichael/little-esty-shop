@@ -78,8 +78,19 @@ RSpec.describe Invoice do
       before :each do
         @discount1 = @merchant1.bulk_discounts.create!(percentage: 0.10, threshold: 3)
       end
+
       it 'calculates the total revenue of the invoice including discounts' do
         expect(@invoice1.invoice_revenue_discounted(@merchant1)).to eq(91_500)
+      end
+    end
+
+    describe '#admin_invoice_revenue_discounted' do
+      before :each do
+        @discount1 = @merchant1.bulk_discounts.create!(percentage: 0.10, threshold: 3)
+      end
+
+      it 'calculates the total revenue of the invoice including discounts' do
+        expect(@invoice1.admin_invoice_revenue_discounted).to eq(91_500)
       end
     end
   end
