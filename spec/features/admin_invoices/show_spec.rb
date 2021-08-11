@@ -7,6 +7,7 @@ RSpec.describe 'Admin Invoice Show Page' do
     @merchant1 = Merchant.create!(name: 'Korbanth')
     @merchant2 = Merchant.create!(name: 'asdf')
 
+    @discount1 = @merchant1.bulk_discounts.create!(percentage: 0.10, threshold: 3)
 
     @item1 = @merchant1.items.create!(
       name: 'SK2',
@@ -42,7 +43,7 @@ RSpec.describe 'Admin Invoice Show Page' do
     @invoice_item2 = InvoiceItem.create!(
       item: @item2,
       invoice: @invoice1,
-      quantity: 1,
+      quantity: 4,
       unit_price: 25_000,
       status: 1)
     @invoice_item3 = InvoiceItem.create!(
@@ -75,8 +76,7 @@ RSpec.describe 'Admin Invoice Show Page' do
 
   it 'displays the total revenue generated from all the items on this invoice' do
     expect(page).to have_content("Total Invoice Revenue Potential")
-    expect(page).to have_content("$865.00")
-
+    expect(page).to have_content("$1,615.00")
   end
 
   it 'can update invoice status: happy path' do
@@ -90,10 +90,14 @@ RSpec.describe 'Admin Invoice Show Page' do
   end
 
   it 'can format the date' do
-
     @item4.created_at = '2021-08-01 14:54:04'
     expected = @item4.format_date(@item4.created_at)
 
     expect(@item4.format_date(@item4.created_at)).to eq(expected)
+  end
+
+  it "displays the total revenue, including any discounts, from all the items on this invoice" do
+    expect(page).to have_content("Total Invoice Revenue Potential (with discounts)")
+    expect(page).to have_content("$1,515.00")
   end
 end
