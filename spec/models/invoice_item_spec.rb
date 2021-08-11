@@ -63,8 +63,11 @@ RSpec.describe InvoiceItem do
 
     describe "#applied_discount" do
       it "returns the bulk discount that the invoice item is eligible for" do
+        discount2 = @merchant1.bulk_discounts.create!(percentage: 0.15, threshold: 4)
+        discount3 = @merchant1.bulk_discounts.create!(percentage: 0.50, threshold: 2)
+
         expect(@invoice_item1.applied_discount(@merchant1.id)).to eq(nil)
-        expect(@invoice_item2.applied_discount(@merchant1.id).id).to eq(@discount1.id)
+        expect(@invoice_item2.applied_discount(@merchant1.id).id).to eq(discount3.id)
       end
     end
   end
